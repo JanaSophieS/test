@@ -1,0 +1,213 @@
+:root {
+  --accent1: #ed0080;
+  --accent6: #9a9da3;
+  --dk1: #4c5058;
+  --lt1: #ffffff;
+  --lt2: #f1e7dc;
+  --frame: #e4d6c6;
+
+  --font-heading: var(--font-barlow-semi-condensed), "Barlow Semi Condensed", sans-serif;
+  --font-body: var(--font-barlow), "Barlow", sans-serif;
+  --font-arabic: var(--font-noto-arabic), "Noto Sans Arabic", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--lt2);
+  color: var(--dk1);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 5vw, 56px);
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: var(--lt1);
+  border: 1px solid var(--frame);
+  border-radius: 6px;
+  padding: clamp(24px, 6vw, 40px);
+}
+
+.logo {
+  display: block;
+  margin: 0 0 20px auto;
+  width: 108px;
+  height: auto;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 4vw, 1.85rem);
+  line-height: 1.25;
+  color: var(--dk1);
+  margin: 0 0 28px;
+}
+
+.heading .accent {
+  color: var(--accent1);
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choiceButton {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--dk1);
+  background: var(--lt1);
+  border: 2px solid var(--accent6);
+  border-radius: 6px;
+  padding: 16px 20px;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.choiceButton[lang="ar"] {
+  font-family: var(--font-arabic);
+  font-size: 1.3rem;
+}
+
+.choiceButton:hover,
+.choiceButton:focus-visible {
+  background: var(--accent1);
+  border-color: var(--accent1);
+  color: var(--lt1);
+}
+
+.choiceButton:active {
+  background: var(--accent1);
+  border-color: var(--accent1);
+  color: var(--lt1);
+}
+
+.choiceButton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.choiceButton:focus-visible {
+  outline: 3px solid var(--dk1);
+  outline-offset: 2px;
+}
+
+.error {
+  margin: 0 0 16px;
+  color: var(--accent1);
+  font-size: 0.9375rem;
+}
+
+.resultsHeading {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 3.5vw, 1.6rem);
+  color: var(--dk1);
+  margin: 0 0 6px;
+}
+
+.resultsSubtext {
+  font-size: 0.9375rem;
+  color: var(--accent6);
+  margin: 0 0 28px;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.barRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barLabelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.barLabel[lang="ar"] {
+  font-family: var(--font-arabic);
+  font-size: 1.05rem;
+}
+
+.barMeta {
+  color: var(--accent6);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.barTrack {
+  height: 14px;
+  border-radius: 7px;
+  background: var(--lt2);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 7px;
+  background: var(--accent6);
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.barFill.leading {
+  background: var(--accent1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barFill {
+    transition: none;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn {
+    animation: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
