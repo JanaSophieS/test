@@ -1,22 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { supabase } from "@/lib/supabase";
-import { VOTE_STORAGE_KEY, VoteOption } from "@/lib/poll";
+import { VoteOption } from "@/lib/poll";
+import { getSnapshot, getServerSnapshot, subscribe, setVote } from "@/lib/voteStorage";
 import VoteButtons from "./VoteButtons";
 import ResultsChart from "./ResultsChart";
 
-type View = "checking" | "vote" | "results";
-
 export default function PollApp() {
-  const [view, setView] = useState<View>("checking");
+  const storedVote = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [submitting, setSubmitting] = useState<VoteOption | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const existingVote = window.localStorage.getItem(VOTE_STORAGE_KEY);
-    setView(existingVote ? "results" : "vote");
-  }, []);
 
   async function handleVote(option: VoteOption) {
     setError(null);
@@ -29,15 +23,10 @@ export default function PollApp() {
       return;
     }
 
-    window.localStorage.setItem(VOTE_STORAGE_KEY, option);
-    setView("results");
+    setVote(option);
   }
 
-  if (view === "checking") return null;
+  if (storedVote) return <ResultsChart />;
 
-  if (view === "vote") {
-    return <VoteButtons onVote={handleVote} submitting={submitting} error={error} />;
-  }
-
-  return <ResultsChart />;
+  return <VoteButtons onVote={handleVote} submitting={submitting} error={error} />;
 }
